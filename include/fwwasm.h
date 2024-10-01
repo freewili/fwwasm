@@ -359,9 +359,21 @@ extern "C"
 	// ===============================================================================
 	// Panels
 	// ===============================================================================
-	void addPanel(int iPanelIndex, int iVisible, int iInRotation, int iUseTile, int iTileID, int iR, int iG, int iB, int iShowMenu)
+	/**
+	 * @brief Add a new panel.
+	 * @param index the index of the panel. Starts at zero.
+	 * @param visible if the panel should be visible.
+	 * @param in_rotation TODO
+	 * @param use_tile if the panel should use tiles.
+	 * @param tile_id the id of the tile to use.
+	 * @param bg_red the red value of the background color. 0-255
+	 * @param bg_green the green value of the background color. 0-255
+	 * @param bg_blue the blue value of the background color. 0-255
+	 * @param show_menu if the panel should show the menu.
+	 */
+	void addPanel(int index, int visible, int in_rotation, int use_tile, int tile_id, int bg_red, int bg_green, int bg_blue, int show_menu)
 		WASM_IMPORT("addPanel");
-	void addPanelPickList(int iPanelIndex,
+	void addPanelPickList(int index,
 		const char* szCaption,
 		int iTileID,
 		int iIconID,
@@ -375,7 +387,7 @@ extern "C"
 	void setPanelMenuText(int iPanel, int iButtonGreyFromZero, const char* message) WASM_IMPORT("setPanelMenuText");
 
 	////////// controls
-	void addControlLED(int iPanelIndex,
+	void addControlLED(int index,
 		int iControlIndex,
 		int iX,
 		int iY,
@@ -388,9 +400,9 @@ extern "C"
 	void setListItemTopIndex(int iLogIndex, int iListIndex);
 	void clearLogOrPlotData(int iLogIndexPlusOne, int iPlotIndexPlusOne) WASM_IMPORT("clearLogOrPlotData");
 
-	void addControlLogList(int iPanelIndex,
+	void addControlLogList(int index,
 		int iControlIndex,
-		int iVisible,
+		int visible,
 		int iLog,
 		int iX,
 		int iY,
@@ -406,14 +418,14 @@ extern "C"
 		int iBFont,
 		int iListMode) WASM_IMPORT("addControlLogList");
 
-	void addControlPlotXAxis(int iPanelIndex, int iControlIndex, int iScrollMode, unsigned long long iTimeMin, unsigned long long iTimeMax)
+	void addControlPlotXAxis(int index, int iControlIndex, int iScrollMode, unsigned long long iTimeMin, unsigned long long iTimeMax)
 		WASM_IMPORT("addControlPlotXAxis");
 
 	void addControlPlotData(int iPlotDataIndex, int iR, int iG, int iB) WASM_IMPORT("addControlPlotData");
 
-	void addControlPlot(int iPanelIndex,
+	void addControlPlot(int index,
 		int iControlIndex,
-		int iVisible,
+		int visible,
 		int iPlotDataIndexBitField,
 		int iX,
 		int iY,
@@ -424,9 +436,9 @@ extern "C"
 		int iR,
 		int iG,
 		int iB) WASM_IMPORT("addControlPlot");
-	void addControlNumber(int iPanelIndex,
+	void addControlNumber(int index,
 		int iControlIndex,
-		int iVisible,
+		int visible,
 		int iX,
 		int iY,
 		int iWidth,
@@ -439,21 +451,34 @@ extern "C"
 		int iFloatDigits,
 		int bIsHexFormat,
 		int bIsUnsigned) WASM_IMPORT("addControlNumber");
-	void addControlPicture(int iPanelIndex, int iControlIndex, int iX, int iY, int iPictureId, int iVisible)
+	void addControlPicture(int index, int iControlIndex, int iX, int iY, int iPictureId, int visible)
 		WASM_IMPORT("addControlPicture");
-	void addControlText(int iPanelIndex,
+	/**
+	 * @brief Add a text control to a panel.
+	 * @param panel_index the index of the panel
+	 * @param control_index the index of the control
+	 * @param x the x position
+	 * @param y the y position
+	 * @param font_type the font type
+	 * @param font_size the font size
+	 * @param red the red value. 0-255
+	 * @param green the green value. 0-255
+	 * @param blue the blue value. 0-255
+	 * @param text_value the text to display.
+	 * */
+	void addControlText(int panel_index,
+		int control_index,
+		int x,
+		int y,
+		int font_type,
+		int font_size,
+		int red,
+		int green,
+		int blue,
+		const char* text_value) WASM_IMPORT("addControlText");
+	void addControlBargraph(int index,
 		int iControlIndex,
-		int iX,
-		int iY,
-		int iFontType,
-		int iFontSize,
-		int iR,
-		int iG,
-		int iB,
-		const char* szText) WASM_IMPORT("addControlText");
-	void addControlBargraph(int iPanelIndex,
-		int iControlIndex,
-		int iVisible,
+		int visible,
 		int iX,
 		int iY,
 		int iWidth,
@@ -464,9 +489,9 @@ extern "C"
 		int iG,
 		int iB) WASM_IMPORT("addControlBargraph");
 
-	void addControlButton(int iPanelIndex,
+	void addControlButton(int index,
 		int iControlIndex,
-		int iVisible,
+		int visible,
 		int iX,
 		int iY,
 		int iWidth,
@@ -479,21 +504,37 @@ extern "C"
 		int iBFore,
 		const char* szText) WASM_IMPORT("addControlButton");
 
-	void setControlValueMinMax(int iPanelIndex, int iControlIndex, int bEnableMinMax, int iMin, int iMax)
+	void setControlValueMinMax(int index, int iControlIndex, int bEnableMinMax, int iMin, int iMax)
 		WASM_IMPORT("setControlValueMinMax");
-	void setControlValueMinMaxF(int iPanelIndex, int iControlIndex, int bEnableMinMax, float iMinF, float iMaxF)
+	void setControlValueMinMaxF(int index, int iControlIndex, int bEnableMinMax, float iMinF, float iMaxF)
 		WASM_IMPORT("setControlValueMinMaxF");
 
 	void setLogDataText(int iLogIndex, const char* szText) WASM_IMPORT("setLogDataText");
 	void setPlotData(int iPlotData, int iSettings, int iNewValue) WASM_IMPORT("setPlotData");
-	void setControlValue(int iPanelIndex, int iControlIndex, int iNewValue) WASM_IMPORT("setControlValue");
-	void setControlValueFloat(int iPanelIndex, int iControlIndex, float fNewValue) WASM_IMPORT("setControlValueFloat");
+	void setControlValue(int index, int iControlIndex, int iNewValue) WASM_IMPORT("setControlValue");
+	void setControlValueFloat(int index, int iControlIndex, float fNewValue) WASM_IMPORT("setControlValueFloat");
 
+	/**
+	 * @brief exit to the main app menu
+	 */
 	void exitToMainAppMenu() WASM_IMPORT("exitToMainAppMenu");
 
-	void showPanel(int iPanel) WASM_IMPORT("showPanel");
+	/**
+	 * @brief Show a panel
+	 * @param index the index of the panel to show
+	 */
+	void showPanel(int index) WASM_IMPORT("showPanel");
 
-	void addControlPictureFromFile(int iPanelIndex, int iControlIndex, int iX, int iY, const char* szPicture, int iVisible)
+	/**
+	 * @brief add a picture control from a file to a panel
+	 * @param panel_index the index of the panel to add the picture to
+	 * @param control_index the index of the control
+	 * @param x the x position of the picture
+	 * @param y the y position of the picture
+	 * @param file_name the name of the file to load. expects the file to be in the /images folder
+	 * @param visible if the control should be visible
+	 */
+	void addControlPictureFromFile(int panel_index, int control_index, int x, int y, const char* file_name, int visible)
 		WASM_IMPORT("addControlPictureFromFile");
 
 	// ===============================================================================
