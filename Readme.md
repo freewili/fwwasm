@@ -1,5 +1,16 @@
-fwwasm.h source
+Free-Wili WASM header
+=====================
 
+This header is for use in projects requiring API access to Free-Wili specific functionality. This repository can easily be integrated into existing cmake projects with the included CMakeLists.txt
+
+
+cmake
+=====
+
+```cmake
+add_subdirectory(path/to/fwwasm fwwasm)
+target_link_libraries(${CMAKE_PROJECT_NAME} fwwasm)
+```
 
 Doxygen
 =======
