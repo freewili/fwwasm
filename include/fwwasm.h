@@ -115,6 +115,16 @@ extern "C"
 	 */
 	void waitms(int milliseconds) WASM_IMPORT("waitms");
 
+	/**
+	 * @brief return a random value
+	 */
+	int wilirand() WASM_IMPORT("wilirand");    
+
+    /**
+     * @brief return number of milliseconds since boot
+     */
+    unsigned int millis() WASM_IMPORT("millis");
+
 	// ===============================================================================
 	// GPIO
 	// ===============================================================================
@@ -301,7 +311,7 @@ extern "C"
 	 * @param duration_ms the duration of the LED in milliseconds
 	 * @param mode the mode of the LED. see LEDManagerLEDMode enum for more details.
 	 */
-	void setBoardLED(int led_index, int red, int green, int blue, int duration_ms, LEDManagerLEDMode mode) WASM_IMPORT("setBoardLED");
+	void setBoardLED(int led_index, int red, int green, int blue, int duration_ms, _LEDManagerLEDMode mode) WASM_IMPORT("setBoardLED");
 	/** @brief set the show mode of the LEDs.
 	 * @param mode the show mode
 	 * @todo
@@ -311,9 +321,30 @@ extern "C"
 	// ===============================================================================
 	// Sound
 	// ===============================================================================
+
+	/// @brief 
+	/// @param file_name 
 	void playSoundFromFile(const char* file_name) WASM_IMPORT("playSoundFromFile");
+	
+    /// @brief 
+	/// @param name 
+	/// @param id 
 	void playSoundFromNameOrID(const char* name, int id) WASM_IMPORT("playSoundFromNameOrID");
+	
+    /// @brief 
+	/// @param bFloat 
+	/// @param iNumber 
+	/// @param fNumber 
+	/// @param iFloatDigits 
 	void playSoundFromNumber(int bFloat, int iNumber, float fNumber, int iFloatDigits) WASM_IMPORT("playSoundFromNumber");
+ 
+    /// @brief Plays a tone of specified frequency and duration
+    /// @param frequency frequency of the tone to play, in Hz
+    /// @param duration duration of the tone to play, in seconds
+    /// @param amplitude amplitude (1.0 is max, 0.2 recommended)
+    /// @param wavetype 
+    void playSoundFromFrequencyAndDuration(float frequency, float duration, float amplitude, char wavetype) WASM_IMPORT("playSoundFromFrequencyAndDuration");
+    
 
 	// ===============================================================================
 	// File IO
@@ -373,6 +404,19 @@ extern "C"
 	 */
 	void addPanel(int index, int visible, int in_rotation, int use_tile, int tile_id, int bg_red, int bg_green, int bg_blue, int show_menu)
 		WASM_IMPORT("addPanel");
+
+	/// @brief 
+	/// @param index 
+	/// @param szCaption 
+	/// @param iTileID 
+	/// @param iIconID 
+	/// @param iRBack 
+	/// @param iGBack 
+	/// @param iBBack 
+	/// @param iRFore 
+	/// @param iGFore 
+	/// @param iBFore 
+	/// @param iLogIndex 
 	void addPanelPickList(int index,
 		const char* szCaption,
 		int iTileID,
@@ -384,6 +428,11 @@ extern "C"
 		unsigned char iGFore,
 		unsigned iBFore,
 		int iLogIndex) WASM_IMPORT("addPanelPickList");
+
+	/// @brief 
+	/// @param iPanel 
+	/// @param iButtonGreyFromZero 
+	/// @param message 
 	void setPanelMenuText(int iPanel, int iButtonGreyFromZero, const char* message) WASM_IMPORT("setPanelMenuText");
 
 	////////// controls
@@ -391,8 +440,8 @@ extern "C"
 		int iControlIndex,
 		int iX,
 		int iY,
-		ePanelColorLED iColor,
-		ePanelSizeLED iSize,
+		_ePanelColorLED iColor,
+		_ePanelSizeLED iSize,
 		int iIntialState) WASM_IMPORT("addControlLED"); // redefined and implemented
 
 	void setListItemText(int iLogIndex, int iListIndex, const char* szText) WASM_IMPORT("setListItemText");
@@ -540,9 +589,9 @@ extern "C"
 	// ===============================================================================
 	// Debug Print
 	// ===============================================================================
-	void printInt(const char* szFormatSpec, printOutColor iColor, printOutDataType iDataType, int iDataValue)
+	void printInt(const char* szFormatSpec, _printOutColor iColor, _printOutDataType iDataType, int iDataValue)
 		WASM_IMPORT("printInt");
-	void printFloat(const char* szFormatSpec, printOutColor iColor, float fDataItem) WASM_IMPORT("printFloat");
+	void printFloat(const char* szFormatSpec, _printOutColor iColor, float fDataItem) WASM_IMPORT("printFloat");
 
 	// ===============================================================================
 	// Sensors
