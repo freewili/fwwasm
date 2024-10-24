@@ -311,7 +311,7 @@ extern "C"
 	 * @param duration_ms the duration of the LED in milliseconds
 	 * @param mode the mode of the LED. see LEDManagerLEDMode enum for more details.
 	 */
-	void setBoardLED(int led_index, int red, int green, int blue, int duration_ms, _LEDManagerLEDMode mode) WASM_IMPORT("setBoardLED");
+	void setBoardLED(int led_index, int red, int green, int blue, int duration_ms, LEDManagerLEDMode mode) WASM_IMPORT("setBoardLED");
 	/** @brief set the show mode of the LEDs.
 	 * @param mode the show mode
 	 * @todo
@@ -440,8 +440,8 @@ extern "C"
 		int iControlIndex,
 		int iX,
 		int iY,
-		_ePanelColorLED iColor,
-		_ePanelSizeLED iSize,
+		ePanelColorLED iColor,
+		ePanelSizeLED iSize,
 		int iIntialState) WASM_IMPORT("addControlLED"); // redefined and implemented
 
 	void setListItemText(int iLogIndex, int iListIndex, const char* szText) WASM_IMPORT("setListItemText");
@@ -589,9 +589,9 @@ extern "C"
 	// ===============================================================================
 	// Debug Print
 	// ===============================================================================
-	void printInt(const char* szFormatSpec, _printOutColor iColor, _printOutDataType iDataType, int iDataValue)
+	void printInt(const char* szFormatSpec, printOutColor iColor, printOutDataType iDataType, int iDataValue)
 		WASM_IMPORT("printInt");
-	void printFloat(const char* szFormatSpec, _printOutColor iColor, float fDataItem) WASM_IMPORT("printFloat");
+	void printFloat(const char* szFormatSpec, printOutColor iColor, float fDataItem) WASM_IMPORT("printFloat");
 
 	// ===============================================================================
 	// Sensors
