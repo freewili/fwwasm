@@ -134,7 +134,7 @@ extern "C"
 	 * @brief get the state of all GPIO
 	 * @return 1 for on, 0 for off for each bit position
 	 */
-	unsigned int getAllIO() WASM_IMPORT("getAllIO");
+	unsigned int getAllIO(void) WASM_IMPORT("getAllIO");
 
 	// ===============================================================================
 	// I2C
@@ -178,7 +178,7 @@ extern "C"
 	 * @brief Get the number of bytes in the UART receive buffer
 	 * @return the number of bytes
 	 */
-	int UARTDataRxCount() WASM_IMPORT("UARTDataRxCount");
+	int UARTDataRxCount(void) WASM_IMPORT("UARTDataRxCount");
 	/**
 	 * @brief read data from the UART
 	 * @param data pointer to the data to read
@@ -354,7 +354,7 @@ extern "C"
 	 * @brief check if there are events in the queue.
 	 * @return 1 if there are events, 0 if there are no events.
 	 */
-	int hasEvent() WASM_IMPORT("hasEvent");
+	int hasEvent(void) WASM_IMPORT("hasEvent");
 
 	// ===============================================================================
 	// Panels
@@ -517,7 +517,7 @@ extern "C"
 	/**
 	 * @brief exit to the main app menu
 	 */
-	void exitToMainAppMenu() WASM_IMPORT("exitToMainAppMenu");
+	void exitToMainAppMenu(void) WASM_IMPORT("exitToMainAppMenu");
 
 	/**
 	 * @brief Show a panel
@@ -567,7 +567,7 @@ extern "C"
 	// ===============================================================================
 	// RTC
 	// ===============================================================================
-	void getRTC() WASM_IMPORT("getRTC");
+	void getRTC(void) WASM_IMPORT("getRTC");
 
 	// ===============================================================================
 	// TODO
