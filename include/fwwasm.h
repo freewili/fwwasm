@@ -115,6 +115,16 @@ extern "C"
 	 */
 	void waitms(int milliseconds) WASM_IMPORT("waitms");
 
+	/**
+	 * @brief return a random value
+	 */
+	int wilirand() WASM_IMPORT("wilirand");    
+
+    /**
+     * @brief return number of milliseconds since boot
+     */
+    unsigned int millis() WASM_IMPORT("millis");
+
 	// ===============================================================================
 	// GPIO
 	// ===============================================================================
@@ -311,9 +321,30 @@ extern "C"
 	// ===============================================================================
 	// Sound
 	// ===============================================================================
+
+	/// @brief 
+	/// @param file_name 
 	void playSoundFromFile(const char* file_name) WASM_IMPORT("playSoundFromFile");
+	
+    /// @brief 
+	/// @param name 
+	/// @param id 
 	void playSoundFromNameOrID(const char* name, int id) WASM_IMPORT("playSoundFromNameOrID");
+	
+    /// @brief 
+	/// @param bFloat 
+	/// @param iNumber 
+	/// @param fNumber 
+	/// @param iFloatDigits 
 	void playSoundFromNumber(int bFloat, int iNumber, float fNumber, int iFloatDigits) WASM_IMPORT("playSoundFromNumber");
+ 
+    /// @brief Plays a tone of specified frequency and duration
+    /// @param frequency frequency of the tone to play, in Hz
+    /// @param duration duration of the tone to play, in seconds
+    /// @param amplitude amplitude (1.0 is max, 0.2 recommended)
+    /// @param wavetype 
+    void playSoundFromFrequencyAndDuration(float frequency, float duration, float amplitude, char wavetype) WASM_IMPORT("playSoundFromFrequencyAndDuration");
+    
 
 	// ===============================================================================
 	// File IO
@@ -373,6 +404,19 @@ extern "C"
 	 */
 	void addPanel(int index, int visible, int in_rotation, int use_tile, int tile_id, int bg_red, int bg_green, int bg_blue, int show_menu)
 		WASM_IMPORT("addPanel");
+
+	/// @brief 
+	/// @param index 
+	/// @param szCaption 
+	/// @param iTileID 
+	/// @param iIconID 
+	/// @param iRBack 
+	/// @param iGBack 
+	/// @param iBBack 
+	/// @param iRFore 
+	/// @param iGFore 
+	/// @param iBFore 
+	/// @param iLogIndex 
 	void addPanelPickList(int index,
 		const char* szCaption,
 		int iTileID,
@@ -384,6 +428,11 @@ extern "C"
 		unsigned char iGFore,
 		unsigned iBFore,
 		int iLogIndex) WASM_IMPORT("addPanelPickList");
+
+	/// @brief 
+	/// @param iPanel 
+	/// @param iButtonGreyFromZero 
+	/// @param message 
 	void setPanelMenuText(int iPanel, int iButtonGreyFromZero, const char* message) WASM_IMPORT("setPanelMenuText");
 
 	////////// controls
