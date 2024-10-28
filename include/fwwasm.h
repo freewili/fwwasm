@@ -297,9 +297,19 @@ extern "C"
 	int RadioSubFileIsTransmitting(void) WASM_IMPORT("RadioSubFileIsTransmitting");
 
 	/**
-	 * @brief Stop a sub file transmissionthat was started with RadioSetTx().
+	 * @brief Stop a sub-file transmission started with RadioTxSubFile().
 	 */
 	void RadioSubFileStop(void) WASM_IMPORT("RadioSubFileStop");
+
+	/**
+	 * @brief Performs a Frequency Scan on supported frequency and reports the frequency that surpassed the Rssi threshold
+  	 * @param index the index of the radio. 1 for Radio 1, 2 for Radio 2.
+    	 * @param RssiThreshold Threshold on when the frequency should be reported 
+         * @param FoundPeak Flag to indicate a Frequency was found that surpassed RssiThreshold
+	 * @param FrequencyResult Frequency that surpassed RssiThreshold
+	 * @param RssiResult Rssi value match to frequency
+	 */
+	int RadioScan(int index, int RssiThreshold, unsigned int* FoundPeak, unsigned int* FrequencyResult, int* RssiResult) WASM_IMPORT("RadioScan");    
 
 	// ===============================================================================
 	// IR
