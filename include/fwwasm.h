@@ -584,6 +584,12 @@ extern "C"
 	void setControlValueFloat(int index, int iControlIndex, float fNewValue) WASM_IMPORT("setControlValueFloat");
 
 	/**
+	 * @brief Instructs the display processor to not sink any of the button events first
+         * @param CanReactToButtons Flag to enable or diable sinking button events on display
+  	 */
+	void setCanDisplayReactToButtons(int CanReactToButtons) WASM_IMPORT("setCanDisplayReactToButtons");
+
+	/**
 	 * @brief exit to the main app menu
 	 */
 	void exitToMainAppMenu(void) WASM_IMPORT("exitToMainAppMenu");
