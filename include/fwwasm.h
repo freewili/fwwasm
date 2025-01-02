@@ -115,6 +115,16 @@ extern "C"
 	 */
 	void waitms(int milliseconds) WASM_IMPORT("waitms");
 
+	/**
+	 * @brief return a random value
+	 */
+	int wilirand(void) WASM_IMPORT("wilirand");
+
+	/**
+	 * @brief return number of milliseconds since boot
+	 */
+	unsigned int millis(void) WASM_IMPORT("millis");
+
 	// ===============================================================================
 	// GPIO
 	// ===============================================================================
@@ -134,7 +144,7 @@ extern "C"
 	 * @brief get the state of all GPIO
 	 * @return 1 for on, 0 for off for each bit position
 	 */
-	unsigned int getAllIO() WASM_IMPORT("getAllIO");
+	unsigned int getAllIO(void) WASM_IMPORT("getAllIO");
 
 	// ===============================================================================
 	// I2C
@@ -178,7 +188,7 @@ extern "C"
 	 * @brief Get the number of bytes in the UART receive buffer
 	 * @return the number of bytes
 	 */
-	int UARTDataRxCount() WASM_IMPORT("UARTDataRxCount");
+	int UARTDataRxCount(void) WASM_IMPORT("UARTDataRxCount");
 	/**
 	 * @brief read data from the UART
 	 * @param data pointer to the data to read
@@ -249,7 +259,7 @@ extern "C"
 	 */
 	int RadioTxSubFile(int index, const char* sub_file) WASM_IMPORT("RadioTxSubFile");
 	/**
-	 * @brief set the radio to transmit
+	 * @brief Transmits a sub file to a radio. This function is non-blocking, see RadioSubFileIsTransmitting().
 	 * @param index the index of the radio. 1 for Radio 1, 2 for Radio 2.
 	 * @return 1 on success, 0 on failure
 	 */
@@ -279,6 +289,27 @@ extern "C"
 	 * @return the LQI
 	 */
 	int RadioGetLQI(int index) WASM_IMPORT("RadioGetLQI");
+
+	/**
+	 * @brief check if the radio is currently transmitting
+	 * @return 1 if transmitting, 0 if not
+	 */
+	int RadioSubFileIsTransmitting(void) WASM_IMPORT("RadioSubFileIsTransmitting");
+
+	/**
+	 * @brief Stop a sub-file transmission started with RadioTxSubFile().
+	 */
+	void RadioSubFileStop(void) WASM_IMPORT("RadioSubFileStop");
+
+	/**
+	 * @brief Performs a Frequency Scan on supported frequency and reports the frequency that surpassed the Rssi threshold
+  	 * @param index the index of the radio. 1 for Radio 1, 2 for Radio 2.
+    	 * @param RssiThreshold Threshold on when the frequency should be reported 
+         * @param FoundPeak Flag to indicate a Frequency was found that surpassed RssiThreshold
+	 * @param FrequencyResult Frequency that surpassed RssiThreshold
+	 * @param RssiResult Rssi value match to frequency
+	 */
+	int RadioScan(int index, int RssiThreshold, unsigned int* FoundPeak, unsigned int* FrequencyResult, int* RssiResult) WASM_IMPORT("RadioScan");    
 
 	// ===============================================================================
 	// IR
@@ -311,9 +342,31 @@ extern "C"
 	// ===============================================================================
 	// Sound
 	// ===============================================================================
+
+	/// @brief
+	/// @param file_name
 	void playSoundFromFile(const char* file_name) WASM_IMPORT("playSoundFromFile");
+
+	/// @brief
+	/// @param name
+	/// @param id
 	void playSoundFromNameOrID(const char* name, int id) WASM_IMPORT("playSoundFromNameOrID");
+
+	/// @brief
+	/// @param bFloat
+	/// @param iNumber
+	/// @param fNumber
+	/// @param iFloatDigits
 	void playSoundFromNumber(int bFloat, int iNumber, float fNumber, int iFloatDigits) WASM_IMPORT("playSoundFromNumber");
+
+	/// @brief Plays a tone of specified frequency and duration
+	/// @param frequency frequency of the tone to play, in Hz
+	/// @param duration duration of the tone to play, in seconds
+	/// @param amplitude amplitude (1.0 is max, 0.2 recommended)
+	/// @param wavetype
+	void playSoundFromFrequencyAndDuration(float frequency, float duration, float amplitude, char wavetype)
+		WASM_IMPORT("playSoundFromFrequencyAndDuration");
+
 
 	// ===============================================================================
 	// File IO
@@ -354,7 +407,7 @@ extern "C"
 	 * @brief check if there are events in the queue.
 	 * @return 1 if there are events, 0 if there are no events.
 	 */
-	int hasEvent() WASM_IMPORT("hasEvent");
+	int hasEvent(void) WASM_IMPORT("hasEvent");
 
 	// ===============================================================================
 	// Panels
@@ -373,6 +426,19 @@ extern "C"
 	 */
 	void addPanel(int index, int visible, int in_rotation, int use_tile, int tile_id, int bg_red, int bg_green, int bg_blue, int show_menu)
 		WASM_IMPORT("addPanel");
+
+	/// @brief
+	/// @param index
+	/// @param szCaption
+	/// @param iTileID
+	/// @param iIconID
+	/// @param iRBack
+	/// @param iGBack
+	/// @param iBBack
+	/// @param iRFore
+	/// @param iGFore
+	/// @param iBFore
+	/// @param iLogIndex
 	void addPanelPickList(int index,
 		const char* szCaption,
 		int iTileID,
@@ -384,6 +450,11 @@ extern "C"
 		unsigned char iGFore,
 		unsigned iBFore,
 		int iLogIndex) WASM_IMPORT("addPanelPickList");
+
+	/// @brief
+	/// @param iPanel
+	/// @param iButtonGreyFromZero
+	/// @param message
 	void setPanelMenuText(int iPanel, int iButtonGreyFromZero, const char* message) WASM_IMPORT("setPanelMenuText");
 
 	////////// controls
@@ -451,8 +522,7 @@ extern "C"
 		int iFloatDigits,
 		int bIsHexFormat,
 		int bIsUnsigned) WASM_IMPORT("addControlNumber");
-	void addControlPicture(int index, int iControlIndex, int iX, int iY, int iPictureId, int visible)
-		WASM_IMPORT("addControlPicture");
+	void addControlPicture(int index, int iControlIndex, int iX, int iY, int iPictureId, int visible) WASM_IMPORT("addControlPicture");
 	/**
 	 * @brief Add a text control to a panel.
 	 * @param panel_index the index of the panel
@@ -504,8 +574,7 @@ extern "C"
 		int iBFore,
 		const char* szText) WASM_IMPORT("addControlButton");
 
-	void setControlValueMinMax(int index, int iControlIndex, int bEnableMinMax, int iMin, int iMax)
-		WASM_IMPORT("setControlValueMinMax");
+	void setControlValueMinMax(int index, int iControlIndex, int bEnableMinMax, int iMin, int iMax) WASM_IMPORT("setControlValueMinMax");
 	void setControlValueMinMaxF(int index, int iControlIndex, int bEnableMinMax, float iMinF, float iMaxF)
 		WASM_IMPORT("setControlValueMinMaxF");
 
@@ -515,9 +584,15 @@ extern "C"
 	void setControlValueFloat(int index, int iControlIndex, float fNewValue) WASM_IMPORT("setControlValueFloat");
 
 	/**
+	 * @brief Instructs the display processor to not sink any of the button events first
+         * @param CanReactToButtons Flag to enable or diable sinking button events on display
+  	 */
+	void setCanDisplayReactToButtons(int CanReactToButtons) WASM_IMPORT("setCanDisplayReactToButtons");
+
+	/**
 	 * @brief exit to the main app menu
 	 */
-	void exitToMainAppMenu() WASM_IMPORT("exitToMainAppMenu");
+	void exitToMainAppMenu(void) WASM_IMPORT("exitToMainAppMenu");
 
 	/**
 	 * @brief Show a panel
@@ -540,8 +615,7 @@ extern "C"
 	// ===============================================================================
 	// Debug Print
 	// ===============================================================================
-	void printInt(const char* szFormatSpec, printOutColor iColor, printOutDataType iDataType, int iDataValue)
-		WASM_IMPORT("printInt");
+	void printInt(const char* szFormatSpec, printOutColor iColor, printOutDataType iDataType, int iDataValue) WASM_IMPORT("printInt");
 	void printFloat(const char* szFormatSpec, printOutColor iColor, float fDataItem) WASM_IMPORT("printFloat");
 
 	// ===============================================================================
@@ -567,7 +641,7 @@ extern "C"
 	// ===============================================================================
 	// RTC
 	// ===============================================================================
-	void getRTC() WASM_IMPORT("getRTC");
+	void getRTC(void) WASM_IMPORT("getRTC");
 
 	// ===============================================================================
 	// Sensor Streaming
