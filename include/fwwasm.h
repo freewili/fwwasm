@@ -644,20 +644,22 @@ extern "C"
 	void getRTC(void) WASM_IMPORT("getRTC");
 
 	// ===============================================================================
-	// TODO
+	// Sensor Streaming
 	// ===============================================================================
 
 	void setSensorSettings(int bStreamAccel,
-		int bStreamTemp,
-		int iRateMilliseconds,
-		int bEnableAccelXPlotData,
-		int iAccelXPlotDataIndex,
-		int bEnableAccelYPlotData,
-		int iAccelYPlotDataIndex,
-		int bEnableAccelZPlotData,
-		int iAccelZPlotDataIndex,
-		int bEnableTempPlotData,
-		int iTempPlotDataIndex) WASM_IMPORT("setSensorSettings");
+      int bStreamTemp,
+      int iRateMilliseconds,
+      int bEnableAccelXPlotData,
+      int iAccelXPlotDataIndex,
+      int bEnableAccelYPlotData,
+      int iAccelYPlotDataIndex,
+      int bEnableAccelZPlotData,
+      int iAccelZPlotDataIndex,
+      int bEnableTempPlotDataC,
+      int iTempPlotDataIndexC,
+      int bEnableTempPlotDataF,
+      int iTempPlotDataIndexF) WASM_IMPORT("setSensorSettings");
 
 	void setAppLogSettings(int bLogIRCodes, int bLogAccel, int bLogTempC, int bLogTempF, int iLogIndex) WASM_IMPORT("setAppLogSettings");
 
