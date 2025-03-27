@@ -4,6 +4,11 @@ Free-Wili WASM header
 This header is for use in projects requiring API access to Free-Wili specific functionality. This repository can easily be integrated into existing cmake projects with the included CMakeLists.txt
 
 
+Documentation
+=============
+
+https://freewili.github.io/fwwasm/
+
 cmake
 =====
 
