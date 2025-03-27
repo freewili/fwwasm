@@ -1,0 +1,51 @@
+name: "Documentation"
+
+on:
+  push:
+
+jobs:
+  build:
+    name: "Build Documentation"
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: mattnotmitt/doxygen-action@v1.12.0
+        with:
+          doxyfile-path: ./Doxyfile
+          working-directory: .
+          enable-latex: false
+          # additional-packages: font-fira-code
+
+      - name: Upload static files as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: doc/html/
+      
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fwwasm-doc-${{ github.sha }}
+          path: |
+            doc/html/
+
+  deploy_documentation:
+    name: "Deploy Documentation"
+    if: |
+      github.ref_name	 == 'master' ||
+      startsWith(github.event.ref, 'refs/tags/v')
+    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: "Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
