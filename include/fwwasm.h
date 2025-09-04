@@ -375,8 +375,8 @@ extern "C"
 	int closeFile(int handle) WASM_IMPORT("closeFile");
 	int writeFile(int handle, unsigned char* data, int data_bytes) WASM_IMPORT("writeFile");
 	int preAllocateSpaceForFile(int handle, int size_in_bytes) WASM_IMPORT("preAllocateSpaceForFile");
-	int readFile(int handle, unsigned char* data, int* data_bytes) WASM_IMPORT("readFile");
-	int readFileLine(int handle, char* data, int* data_bytes) WASM_IMPORT("readFileLine");
+	int readFile(int handle, unsigned char* data, int data_bytes) WASM_IMPORT("readFile");
+	int readFileLine(int handle, char* data, int data_bytes) WASM_IMPORT("readFileLine");
 	int setFilePosition(int handle, int position) WASM_IMPORT("setFilePosition");
 	int getFilePosition(int handle) WASM_IMPORT("getFilePosition");
 	int getFileSize(int handle) WASM_IMPORT("getFileSize");
@@ -582,6 +582,7 @@ extern "C"
 	void setPlotData(int iPlotData, int iSettings, int iNewValue) WASM_IMPORT("setPlotData");
 	void setControlValue(int index, int iControlIndex, int iNewValue) WASM_IMPORT("setControlValue");
 	void setControlValueFloat(int index, int iControlIndex, float fNewValue) WASM_IMPORT("setControlValueFloat");
+	void setControlValueText(int index, int iControlIndex, const char* szText) WASM_IMPORT("setControlValueText");	
 
 	/**
 	 * @brief Instructs the display processor to not sink any of the button events first
