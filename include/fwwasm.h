@@ -678,6 +678,126 @@ extern "C"
 	void showDialogTextEdit(const char* message, const char* initial_value) WASM_IMPORT("showDialogTextEdit");
 	void showDialogPickList(const char* message, int log_index, int default_item) WASM_IMPORT("showDialogPickList");
 
+
+	typedef enum _WILEyeFileDestination
+	{
+		wilEyeFileDestSDCard = 0,
+		wilEyeFileDestWili,
+	} WILEyeFileDestination;
+
+	typedef enum _WILEyeZoomLevel
+	{
+		wilEyeZoomLevel1x = 1,
+		wilEyeZoomLevel2x = 2,
+		wilEyeZoomLevel3x = 2,		
+		wilEyeZoomLevel4x = 4,
+	} WILEyeZoomLevel;
+
+	typedef enum _WILEyeResolution
+	{
+		wilEyeRes640x480 = 0,
+		wilEyeRes1280x720 = 1,
+		wilEyeRes1920x1080 = 2,
+	} WILEyeResolution;
+
+	/**
+	 * @brief Take a picture with the WilEye camera
+	 * @param iDestination the destination to save the picture. See WILEyeFileDestination enum for more details.
+	 * @param sFileName the name of the file to save the picture to. If saving to the Wili, this is ignored.
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.* 
+	 */
+	int wilEyeTakePicture(int iDestination, const char* sFileName) WASM_IMPORT("wilEyeTakePicture");
+
+	/**
+	 * @brief Start video recording with the WilEye camera
+	 * @param iDestination the destination to save the video. See WILEyeFileDestination enum for more details.
+	 * @param sFileName the name of the file to save the video to. If saving to the Wili, this is ignored.
+	 * @return 1 on success, 0 on failure
+	* @note WILEye must be connected for this function to work.* 
+	 */
+	int wilEyeStartVideo(int iDestination, const char* sFileName) WASM_IMPORT("wilEyeStartVideo");
+
+	/**
+	 * @brief Stop video recording with the WilEye camera
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.
+	 */
+	int wilEyeStopVideo(void) WASM_IMPORT("wilEyeStopVideo");
+
+	/**
+	 * @brief Set the zoom level of the WilEye camera
+	 * @param iZoomLevel the zoom level to set. See WILEyeZoomLevel enum for more details.
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.
+	*/
+	int wilEyeSetZoom(int iZoomLevel) WASM_IMPORT("wilEyeSetZoom");	
+
+	/**
+	 * @brief Set the Contrast settings of the WilEye camera
+	 * @param iContrast the contrast to set. 0 to 100
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.
+	 */
+	int wilEyeSetContrast(int iContrast) WASM_IMPORT("wilEyeSetContrast");
+
+	/**
+	 * @brief Set the Brightness settings of the WilEye camera
+	 * @param iBrightness the brightness to set. 0 to 100
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.
+	 * 
+	 */
+	int wilEyeSetBrightness(int iBrightness) WASM_IMPORT("wilEyeSetBrightness");
+
+	/**
+	 * @brief Set the Saturation settings of the WilEye camera
+	 * @param iSaturation the saturation to set. 0 to 100
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.
+	 * 
+	 */
+	int wilEyeSetSaturation(int iSaturation) WASM_IMPORT("wilEyeSetSaturation");
+
+	/**
+	 * @brief Set the Hue settings of the WilEye camera
+	 * @param iHue the hue to set.  to 100
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.
+	 * 
+	 */
+	int wilEyeSetHue(int iHue) WASM_IMPORT("wilEyeSetHue");
+
+	/**
+	 * @brief Set the Flash settings of the WilEye camera
+	 * @param iFlashOn 1 to turn on the flash, 0 to turn off the flash
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.
+	 * 
+	 */
+	int wilEyeSetFlash(int iFlashOn) WASM_IMPORT("wilEyeSetFlash");
+
+	/**
+	 * @brief Set the Resolution settings of the WilEye camera
+	 * @param iResolution the resolution to set. See WILEyeResolution enum for more details.
+	 * @return 1 on success, 0 on failure
+	 * @note WILEye must be connected for this function to work.
+	 */
+	int wilEyeSetResolution(int iResolution) WASM_IMPORT("wilEyeSetResolution");
+
+	/**
+	 * @brief Get the number of events in the WilEye event queue
+	 * @return the number of events in the queue
+	 */
+	int wilEyeGetEventCount(void) WASM_IMPORT("wilEyeGetEventCount");
+
+	/**
+	 * @brief Get a WilEye event from the event queue
+	 * @param index the index of the event to get. 0 is the oldest event.
+	 * @return pointer to an array of integers containing the event data.
+	 */
+	int* wilEyeGetEvent(int index) WASM_IMPORT("wilEyeGetEvent");
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
